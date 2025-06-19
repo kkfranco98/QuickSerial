@@ -1,0 +1,25 @@
+{
+    "name": "QuickSerial",
+    "version": "1.0.0",
+    "description": "an easier way to print to serial",
+    "keywords": [
+        "serial",
+        "communication"
+    ],
+    "authors": [
+        {
+            "name": "Francesco Simonetti",
+            "maintainer": true,
+            "url": "https://github.com/kkfranco98"
+        }
+    ],
+    "license": "MIT",
+    "frameworks": [
+        "arduino"
+    ],
+    "platforms": "*",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kkfranco98/QuickSerial"
+    }
+}
