@@ -1,7 +1,7 @@
 
 // First, include the library and Arduino.h if necessary
 #include <arduino.h>
-#include <quick_serial.hpp>
+#include <QuickSerial.h>
 
 //--------------------------------------
 
