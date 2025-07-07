@@ -13,7 +13,6 @@ QuickSerial Quick_Serial(Serial);
 
 void setup()
 {
-
     Serial.begin(115200); // Initialize serial communication. QuickSerial uses the serial port only for formatting and printing, so you must initialize it yourself.
 
     delay(3000);
@@ -84,6 +83,7 @@ void setup()
     // You can also concatenate arrays
     int numbers2[] = {3, 7, 9};
     uint16_t numbers3[] = {5, 8, 6};
+    Quick_Serial.println("concatenated arrays:");
     Quick_Serial.println(numbers2, numbers3);
     Quick_Serial.println();
 
@@ -110,6 +110,12 @@ void setup()
     // You can also add brackets, separators, etc...
     Quick_Serial.println<'['>(byte_array);
     Quick_Serial.println<'[', 1, ','>(byte_array);
+    Quick_Serial.println();
+
+    //--------------------------------------------------------------------------
+    // You can also print array with index
+    static byte bytes[] = {2, 4, 7, 5, 33, 65, 100, 200 , 22, 29 , 79, 99, 15};
+    Quick_Serial.print_byte_array_with_index(bytes);
     Quick_Serial.println();
 }
 

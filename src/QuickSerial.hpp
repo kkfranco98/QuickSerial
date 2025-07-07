@@ -111,7 +111,7 @@ public:
               uint32_t spaces = 0,
               char separator = ' ',
               size_t N>
-    void print(const char (&str)[N]) // se si vuole stampare direttamente una stringa (esempio: Serial.print("ciao"); viene interpretato come un array di char)
+    void print(const char (&str)[N])
     {
         if (start_bracket != '\0')
         {
@@ -186,6 +186,40 @@ public:
         _used_serial.println();
     }
 
+    //! ------------- print_byte_array_with_index -------------
+    template <size_t N>
+    void print_byte_array_with_index(const byte (&array)[N])
+    {
+        const uint32_t digits = count_digits(sizeof(array));
+        for (uint32_t tl = 0; tl < (2 + digits + 3 + 4 + 2); tl++)
+        {
+            _used_serial.print('-');
+        }
+        _used_serial.println();
+        for (uint32_t index = 0; index < sizeof(array); index++)
+        {
+            _used_serial.print('|');
+            _used_serial.print(' ');
+            for (uint32_t i = 0; i < digits - count_digits(index); i++)
+            {
+                _used_serial.print(' ');
+            }
+            _used_serial.print(index);
+            _used_serial.print(' ');
+            _used_serial.print('|');
+            _used_serial.print(' ');
+            this->print(array[index]);
+            _used_serial.print(' ');
+            _used_serial.print('|');
+            _used_serial.println();
+        }
+        for (uint32_t i = 0; i < (2 + digits + 3 + 4 + 2); i++)
+        {
+            _used_serial.print('-');
+        }
+        _used_serial.println();
+    }
+
 protected:
     char get_end_bracket_from_start_bracket(const char &);
 
@@ -195,5 +229,12 @@ protected:
         {
             _used_serial.print(" ");
         }
+    }
+
+    int count_digits(int n)
+    {
+        if (n == 0)
+            return 1;
+        return (int)std::log10(std::abs(n)) + 1;
     }
 };
