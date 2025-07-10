@@ -6,10 +6,13 @@ class QuickSerial
 {
 private:
     HardwareSerial &_used_serial;
+    uint32_t _digits_after_decimal_point;
 
 public:
-    QuickSerial(HardwareSerial &serial) : _used_serial(serial) {}
+    QuickSerial(HardwareSerial &serial, uint32_t digits_after_decimal_point = 2) : _used_serial(serial),
+                                                                                   _digits_after_decimal_point(digits_after_decimal_point) {}
 
+    void set_digits_after_decimal_point(const uint32_t &digits_after_decimal_point);
     void println();
 
     //*--------------template--------------
@@ -38,6 +41,7 @@ public:
         }
     }
 
+    //*-------------byte-------------
     template <char start_bracket = '\0',
               uint32_t spaces = 0,
               char separator = ' '>
@@ -63,6 +67,7 @@ public:
         }
     }
 
+    //*-------------array-------------
     template <char start_bracket = '\0',
               uint32_t spaces = 0,
               char separator = ' ',
@@ -99,14 +104,34 @@ public:
         }
     }
 
+    //*-------------bool-------------
     template <char start_bracket = '\0',
               uint32_t spaces = 0,
               char separator = ' '>
-    void print(const bool &valore)
+    void print(const bool &value)
     {
-        _used_serial.print(valore ? "'true'" : "'false'");
+        _used_serial.print(value ? "'true'" : "'false'");
     }
 
+    //*-------------double-------------
+    template <char start_bracket = '\0',
+              uint32_t spaces = 0,
+              char separator = ' '>
+    void print(const double &value)
+    {
+        _used_serial.print(value, _digits_after_decimal_point);
+    }
+
+    //*-------------float-------------
+    template <char start_bracket = '\0',
+              uint32_t spaces = 0,
+              char separator = ' '>
+    void print(const float &value)
+    {
+        _used_serial.print(value, _digits_after_decimal_point);
+    }
+
+    //*-------------string-------------
     template <char start_bracket = '\0',
               uint32_t spaces = 0,
               char separator = ' ',
@@ -222,19 +247,6 @@ public:
 
 protected:
     char get_end_bracket_from_start_bracket(const char &);
-
-    void print_this_spaces(uint32_t spaces)
-    {
-        for (uint32_t i = 0; i < spaces; i++)
-        {
-            _used_serial.print(" ");
-        }
-    }
-
-    int count_digits(int n)
-    {
-        if (n == 0)
-            return 1;
-        return (int)std::log10(std::abs(n)) + 1;
-    }
+    void print_this_spaces(uint32_t spaces);
+    int count_digits(int n);
 };

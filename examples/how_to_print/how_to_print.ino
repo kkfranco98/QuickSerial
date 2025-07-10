@@ -9,6 +9,16 @@
 // The parameter is a HardwareSerial object, for example Serial (commonly used for code upload and communication with the PC).
 QuickSerial Quick_Serial(Serial);
 
+//==========================================================================
+//* QuickSerial Quick_Serial(Serial , 6);
+//                                    ^
+//   _________________________________|
+//   |
+//   v
+// You can specify the number of digits after the decimal point in the constructor (by default it is 2).
+// This behavior can be configured also with the method "set_digits_after_decimal_point"
+//==========================================================================
+
 //--------------------------------------------------------------------------
 
 void setup()
@@ -64,6 +74,16 @@ void setup()
     Quick_Serial.println();
 
     //--------------------------------------------------------------------------
+    //
+    double double_value = 3.141592;
+    Quick_Serial.set_digits_after_decimal_point(2);
+    Quick_Serial.println("this is a double with 2 digits:", double_value);
+    Quick_Serial.set_digits_after_decimal_point(6);
+    Quick_Serial.println("this is the same double with 6 digits:", double_value);
+    Quick_Serial.set_digits_after_decimal_point(2); // Restore the default value
+    Quick_Serial.println();
+
+    //--------------------------------------------------------------------------
     // one more thing
     // if you have and array, you can print it like this
 
@@ -114,7 +134,7 @@ void setup()
 
     //--------------------------------------------------------------------------
     // You can also print array with index
-    static byte bytes[] = {2, 4, 7, 5, 33, 65, 100, 200 , 22, 29 , 79, 99, 15};
+    static byte bytes[] = {2, 4, 7, 5, 33, 65, 100, 200, 22, 29, 79, 99, 15};
     Quick_Serial.print_byte_array_with_index(bytes);
     Quick_Serial.println();
 }
